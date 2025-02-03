@@ -1,18 +1,9 @@
 'use client'
+
+import { FormState, handleSubmit } from "@/actions/products"
 import Submit from "@/components/submit"
-import { createProdct } from "@/prisma-db"
-import { redirect } from "next/navigation"
 import { useActionState } from "react"
 
-type Errors = {
-    title?: string;
-    description?: string;
-    price?: string;
-}
-
-type FormState = {
-    errors: Errors
-}
 
 export default function ProductsDbCreate() {
     
@@ -22,32 +13,6 @@ export default function ProductsDbCreate() {
     const [state, formAction, isPending] = useActionState(handleSubmit, initialState)
 
     
-    const handleSubmit = async (formData: FormData) => {
-        'use server'
-        const title = await formData.get('title') as string 
-        const description = await formData.get('description') as string 
-        const price = await formData.get('price') as string
-
-        const errors: Errors = {}
-
-        if ( !title ) {
-            errors.title = 'Title is required'
-        }
-        if ( !description ) {
-            errors.title = 'Description is required'
-        }
-        if ( !price ) {
-            errors.title = 'Price is required'
-        }
-        
-        if ( Object.keys(errors).length > 0 ) {
-            return {errors}
-        }
-
-        await createProdct( title, +price, description );
-        redirect('/products-db')
-    }
-  
     return (
         <form action={formAction} className="p-4 space-y-4 max-w-96">
 
@@ -59,9 +24,10 @@ export default function ProductsDbCreate() {
             name="title"
            
           />
-          <br/>
-          {state.errors.title && <p className="text-red-500">{state.errors.title}</p>}
+         
         </label>
+        <br/>
+        {state.errors.title && <p className="text-red-500">{state.errors.title}</p>}
 
         <label className="text-white">
           Price
@@ -71,9 +37,9 @@ export default function ProductsDbCreate() {
             name="price"
            
           />
-           <br/>
-           {state.errors.price && <p className="text-red-500">{state.errors.price}</p>}
         </label>
+        <br/>
+        {state.errors.price && <p className="text-red-500">{state.errors.price}</p>}
 
         <label className="text-white">
           Description
@@ -82,9 +48,10 @@ export default function ProductsDbCreate() {
             name="description"
             
           />
-           <br/>
-           {state.errors.description && <p className="text-red-500">{state.errors.description}</p>}
+          
         </label>
+        <br/>
+        {state.errors.description && <p className="text-red-500">{state.errors.description}</p>}
 
         {/* <Submit/> */}
 
