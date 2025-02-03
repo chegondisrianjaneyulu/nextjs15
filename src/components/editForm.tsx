@@ -1,20 +1,22 @@
 'use client'
-
-import { FormState, handleSubmit } from "@/actions/products"
-// import Submit from "@/components/submit"
+import { editProduct, FormState, } from "@/actions/products"
+import { Product } from "@/app/products-db/page"
 import { useActionState } from "react"
 
 
-export default function ProductsDbCreate() {
-    
+
+
+export default function EditForm({product}: {product: Product}) {
     const initialState: FormState= {
         errors: {}
     }
-    const [state, formAction, isPending] = useActionState(handleSubmit, initialState)
 
-    
-    return (
-        <form action={formAction} className="p-4 space-y-4 max-w-96">
+    const editProductWithId = editProduct.bind(null, product.id)
+
+    const [state, formAction, isPending] = useActionState(editProductWithId, initialState)
+
+   return (
+       <form action={formAction} className="p-4 space-y-4 max-w-96">
 
         <label className="text-white">
           Title
@@ -22,7 +24,7 @@ export default function ProductsDbCreate() {
             type="text"
             className="block w-full p-2 text-black border rounded"
             name="title"
-           
+           defaultValue={product.title}
           />
          
         </label>
@@ -35,7 +37,7 @@ export default function ProductsDbCreate() {
             type="number"
             className="block w-full p-2 text-black border rounded"
             name="price"
-           
+            defaultValue={product.price}
           />
         </label>
         <br/>
@@ -46,7 +48,7 @@ export default function ProductsDbCreate() {
           <textarea
             className="block w-full p-2 text-black border rounded"
             name="description"
-            
+            defaultValue={product.description ?? ""}
           />
           
         </label>
@@ -60,5 +62,5 @@ export default function ProductsDbCreate() {
         </button>
 
        </form>
-    )
+   )
 }
