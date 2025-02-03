@@ -11,15 +11,13 @@ export default function ProductDetail({products}: {products: Product[]}) {
 
     const [optimisticProducts, setOptimisticProducts] = useOptimistic(products, (currentProducts, productId) => {
         return currentProducts.filter((data) => data.id !== productId)
-     })
+    })
   
-     const handleDelete = async (productId:number) => {
+    const handleDelete = async (productId:number) => {
        setOptimisticProducts(productId)
        removeProduct(productId)
-     }
-
-     
-
+    }
+    
     return (
         <ul className="space-y-4 p-4">
         {optimisticProducts.map((product) => (
