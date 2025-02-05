@@ -1,7 +1,15 @@
 import Navbar from '@/components/newDashboardLayout/navbar'
+import { auth, currentUser } from '@clerk/nextjs/server'
 import React from 'react'
 
-function NewDashboard() {
+async function NewDashboard() {
+
+  const authObj = await auth()
+  const userObj = await currentUser()
+
+  console.log(authObj)
+  console.log(userObj)
+
   return (
     <div>
         <Navbar/>

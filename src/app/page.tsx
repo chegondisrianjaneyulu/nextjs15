@@ -12,6 +12,7 @@ export default function Home() {
       <Link href='/products'>Products</Link>
       <Link href='/products-review'>Product Reviews</Link>
       <Link href='/products-db'>Product DB</Link>
+      <Link href='/new-dashboard'>New Dashboard</Link>
     </div>
   );
 }
