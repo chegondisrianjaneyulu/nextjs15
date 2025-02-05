@@ -5,8 +5,6 @@ import { Product } from "@/app/products-db/page"
 import Link from "next/link"
 import { useOptimistic } from "react"
 
-
-
 export default function ProductDetail({products}: {products: Product[]}) {
 
     const [optimisticProducts, setOptimisticProducts] = useOptimistic(products, (currentProducts, productId) => {
@@ -17,7 +15,7 @@ export default function ProductDetail({products}: {products: Product[]}) {
        setOptimisticProducts(productId)
        removeProduct(productId)
     }
-    
+
     return (
         <ul className="space-y-4 p-4">
         {optimisticProducts.map((product) => (

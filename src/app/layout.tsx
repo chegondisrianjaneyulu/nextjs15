@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navigation from "@/components/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +27,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode;}>) {
   return (
-    <html lang="en">
-      <ThemeProvider>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          {children}
-        </body>
-      </ThemeProvider>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <ThemeProvider>
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <Navigation/>
+            {children}
+          </body>
+        </ThemeProvider>
+      </html>
+    </ClerkProvider>
   );
 }
